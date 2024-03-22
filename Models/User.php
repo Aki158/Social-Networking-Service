@@ -11,8 +11,8 @@ class User implements Model {
     public function __construct(
         private string $username,
         private string $email,
+        private string $userType,
         private ?int $id = null,
-        private ?string $company = null,
         private ?string $emailConfirmedAt = null,
         private ?DataTimeStamp $timeStamp = null,
     ) {}
@@ -41,19 +41,19 @@ class User implements Model {
         $this->email = $email;
     }
 
-    public function getCompany(): ?string {
-        return $this->company;
+    public function getUserType(): ?string {
+        return $this->userType;
     }
 
-    public function setCompany(?string $company): void {
-        $this->company = $company;
+    public function setUserType(string $userType): void {
+        $this->userType = $userType;
     }
 
     public function getEmailConfirmedAt(): ?string {
         return $this->emailConfirmedAt;
     }
 
-    public function setEmailConfirmedAt(?string $emailConfirmedAt): void {
+    public function setEmailConfirmedAt(string $emailConfirmedAt): void {
         $this->emailConfirmedAt = $emailConfirmedAt;
     }
 

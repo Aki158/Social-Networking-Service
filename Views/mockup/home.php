@@ -113,9 +113,5 @@
     </div>
 </div>
 
-<footer class="text-center p-3 text-gray-500">
-    <p>©:PostSphere</p>
-</footer>
-
 </body>
 </html>
