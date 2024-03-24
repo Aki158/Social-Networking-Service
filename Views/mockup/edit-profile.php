@@ -44,9 +44,8 @@
             </div>
 
             <div class="p-4 border w-full bg-white flex justify-center flex-col rounded-b-3xl  shadow-xl">
-                <div class="flex justify-between">
-                    <img class="inline-block h-16 w-16 rounded-full ring-2 ring-white" src="/file-not-found.jpg" alt="">
-                </div>
+                <img class="inline-block h-16 w-16 rounded-full ring-2 ring-white ml-3" src="/file-not-found.jpg" alt="">
+                <button type="button" class="text-start ml-3 mb-3 text-gray-500">変更する</button>
                 <form action="#" method="post" class="space-y-2 w-full">
                     <div>
                         <div class="flex justify-between">

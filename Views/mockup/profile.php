@@ -105,6 +105,7 @@
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-reply"></i></button>
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-retweet"></i></button>
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-heart"></i></button>
+                        <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
                 <div>
@@ -126,6 +127,7 @@
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-reply"></i></button>
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-retweet"></i></button>
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-heart"></i></button>
+                        <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
                 <div>
@@ -147,16 +149,13 @@
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-reply"></i></button>
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-retweet"></i></button>
                         <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-heart"></i></button>
+                        <button class="hover:bg-gray-200 py-3 px-4 rounded-full"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<footer class="text-center p-3 text-gray-500">
-    <p>©:PostSphere</p>
-</footer>
 
 </body>
 </html>
