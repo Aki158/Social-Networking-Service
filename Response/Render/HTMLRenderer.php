@@ -42,13 +42,14 @@ class HTMLRenderer implements HTTPRenderer
         // ユーザーへのアクセスを提供します
         $user = Authenticate::getAuthenticatedUser();
         require $this->getViewPath('layout/header');
-        require $this->getViewPath('component/navigator');
-        require $this->getViewPath('component/message-boxes');
+        // require $this->getViewPath('component/navigator');
+        // require $this->getViewPath('component/message-boxes');
         return ob_get_clean();
     }
 
     private function getFooter(): string{
         ob_start();
+        extract($this->data);
         require $this->getViewPath('layout/footer');
         return ob_get_clean();
     }

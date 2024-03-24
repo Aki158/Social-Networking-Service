@@ -17,6 +17,45 @@ use Types\ValueType;
 use Models\User;
 
 return [
+    'login' => Route::create('login', function (): HTTPRenderer {
+        return new HTMLRenderer('auth/login', ['type'=>'auth']);
+    })->setMiddleware(['guest']),
+    'register' => Route::create('register', function (): HTTPRenderer {
+        return new HTMLRenderer('auth/register', ['type'=>'auth']);
+    })->setMiddleware(['guest']),
+    'mail-send' => Route::create('mail-send', function (): HTTPRenderer {
+        return new HTMLRenderer('auth/mail-send', ['type'=>'auth']);
+    })->setMiddleware(['guest']),
+    'resend' => Route::create('resend', function (): HTTPRenderer {
+        return new HTMLRenderer('auth/resend', ['type'=>'auth']);
+    })->setMiddleware(['guest']),
+
+    'edit-profile' => Route::create('edit-profile', function (): HTTPRenderer {
+        return new HTMLRenderer('component/edit-profile', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+    'follow-list' => Route::create('follow-list', function (): HTTPRenderer {
+        return new HTMLRenderer('component/follow-list', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+    'home' => Route::create('home', function (): HTTPRenderer {
+        return new HTMLRenderer('component/home', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+    'message-list' => Route::create('message-list', function (): HTTPRenderer {
+        return new HTMLRenderer('component/message-list', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+    'message' => Route::create('message', function (): HTTPRenderer {
+        return new HTMLRenderer('component/message-list', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+    'notice' => Route::create('notice', function (): HTTPRenderer {
+        return new HTMLRenderer('component/notice', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+    'post' => Route::create('post', function (): HTTPRenderer {
+        return new HTMLRenderer('component/post', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+    'profile' => Route::create('profile', function (): HTTPRenderer {
+        return new HTMLRenderer('component/profile', ['type'=>'component']);
+    })->setMiddleware(['guest']),
+
+
     // 'login' => Route::create('login', function (): HTTPRenderer {
     //     return new HTMLRenderer('page/login');
     // })->setMiddleware(['guest']),

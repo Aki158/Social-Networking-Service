@@ -10,11 +10,12 @@ class Post implements Model {
 
     public function __construct(
         private int $userId,
+        private string $url,
         private ?int $id = null,
         private ?int $replyToId = null,
         private ?string $content = null,
         private ?string $postAppointmentTime = null,
-        private ?DataTimeStamp $timeStamp = null,
+        private ?string $postedAt = null,
     ) {}
 
     public function getId(): ?int {
@@ -41,6 +42,14 @@ class Post implements Model {
         $this->replyToId = $replyToId;
     }
 
+    public function getUrl(): string {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): void {
+        $this->url = $url;
+    }
+
     public function getContent(): ?string {
         return $this->content;
     }
@@ -57,13 +66,11 @@ class Post implements Model {
         $this->postAppointmentTime = $postAppointmentTime;
     }
 
-    public function getTimeStamp(): ?DataTimeStamp
-    {
-        return $this->timeStamp;
+    public function getPostedAt(): ?string {
+        return $this->postedAt;
     }
 
-    public function setTimeStamp(DataTimeStamp $timeStamp): void
-    {
-        $this->timeStamp = $timeStamp;
+    public function setPostedAt(string $postedAt): void {
+        $this->postedAt = $postedAt;
     }
 }

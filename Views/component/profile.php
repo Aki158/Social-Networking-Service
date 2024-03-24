@@ -1,15 +1,3 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/Public/css/output.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/0444843589.js" crossorigin="anonymous"></script>
-
-    <title>PostSphere</title>
-</head>
-<body class="bg-gray-100">
-
 <div class="flex min-h-screen">
     <!-- サイドメニュー -->
     <div class="fixed inset-y-0 left-0 w-1/4 pl-16 min-h-screen pr-3">
@@ -156,6 +144,3 @@
         </div>
     </div>
 </div>
-
-</body>
-</html>

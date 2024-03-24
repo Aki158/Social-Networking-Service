@@ -12,7 +12,7 @@ class Notice implements Model {
         private int $userId,
         private int $visitedId,
         private int $referenceId,
-        private string $noticeType,
+        private string $referenceType,
         private ?int $id = null,
         private ?string $confirmedAt = null
     ) {}
@@ -41,20 +41,20 @@ class Notice implements Model {
         $this->visitedId = $visitedId;
     }
 
-    public function getNoticeType(): string {
-        return $this->noticeType;
-    }
-
-    public function setNoticeType(string $noticeType): void {
-        $this->noticeType = $noticeType;
-    }
-
     public function getReferenceId(): int {
         return $this->referenceId;
     }
 
     public function setReferenceId(int $referenceId): void {
         $this->referenceId = $referenceId;
+    }
+
+    public function getReferenceType(): string {
+        return $this->referenceType;
+    }
+
+    public function setReferenceType(string $referenceType): void {
+        $this->referenceType = $referenceType;
     }
 
     public function getConfirmedAt(): ?string {

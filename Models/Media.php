@@ -5,12 +5,12 @@ namespace Models;
 use Models\Interfaces\Model;
 use Models\Traits\GenericModel;
 
-class Notice implements Model {
+class Media implements Model {
     use GenericModel;
 
     public function __construct(
-        private int $requestId,
-        private string $requestType,
+        private int $referenceId,
+        private string $referenceType,
         private ?int $id = null,
         private ?string $imagePath = null,
         private ?string $thumbnailPath = null,
@@ -26,20 +26,20 @@ class Notice implements Model {
         $this->id = $id;
     }
 
-    public function getRequestId(): int {
-        return $this->requestId;
+    public function getReferenceId(): int {
+        return $this->referenceId;
     }
 
-    public function setRequestId(int $requestId): void {
-        $this->requestId = $requestId;
+    public function setReferenceId(int $referenceId): void {
+        $this->referenceId = $referenceId;
     }
 
-    public function getRequestType(): string {
-        return $this->requestType;
+    public function getReferenceType(): string {
+        return $this->referenceType;
     }
 
-    public function setRequestType(string $requestType): void {
-        $this->requestType = $requestType;
+    public function setReferenceType(string $referenceType): void {
+        $this->referenceType = $referenceType;
     }
 
     public function getImagePath(): ?string {

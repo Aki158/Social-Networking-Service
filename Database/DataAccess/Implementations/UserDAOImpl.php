@@ -2,20 +2,22 @@
 
 namespace Database\DataAccess\Implementations;
 
+use Database\DataAccess\DAOFactory;
 use Database\DataAccess\Interfaces\UserDAO;
 use Database\DatabaseManager;
 use Models\DataTimeStamp;
 use Models\User;
+use Models\Profile;
 
 class UserDAOImpl implements UserDAO
 {
     public function create(User $user, string $password): bool
     {
-        if ($user->getId() !== null) throw new \Exception('Cannot create a user with an existing ID. id: ' . $user->getId());
+        if ($user->getId() !== null) throw new \Exception('Cannot create row data with an existing ID. id: ' . $user->getId());
 
         $mysqli = DatabaseManager::getMysqliConnection();
 
-        $query = "INSERT INTO users (username, email, password, company) VALUES (?, ?, ?, ?)";
+        $query = "INSERT INTO User (username, email, user_type, password) VALUES (?, ?, ?, ?)";
 
         $result = $mysqli->prepareAndExecute(
             $query,
@@ -23,62 +25,79 @@ class UserDAOImpl implements UserDAO
             [
                 $user->getUsername(),
                 $user->getEmail(),
-                password_hash($password, PASSWORD_DEFAULT), // store the hashed password
-                $user->getCompany()
+                $user->getUserType(),
+                password_hash($password, PASSWORD_DEFAULT) // store the hashed password
             ]
         );
 
         if (!$result) return false;
 
-        $user->setId($mysqli->insert_id);
+        // UserとProfileは1対1の関係であるため、Userデータ作成時にProfileデータも作成し同期させる
+        $id = $mysqli->insert_id;
+        $profile = new Profile(userId: $id);
+        $profileDao = DAOFactory::getProfileDAO();
+        $profileDao->create($profile);
 
         return true;
     }
 
-    public function update(User $user, string $password, ?string $emailConfirmedAt): bool
+    public function update(User $user, string $username, ?string $emailConfirmedAt): bool
     {
         if ($user->getId() === null) throw new \Exception('The specified user has no ID.');
+
+        // プロフィール編集時は、usernameのみ変更されるため、emailConfirmedAtには、前回値を代入する
+        if ($emailConfirmedAt === null) {
+            $emailConfirmedAt = $user->getEmailConfirmedAt();
+        }
 
         $mysqli = DatabaseManager::getMysqliConnection();
 
         $query =
         <<<SQL
-            INSERT INTO users (id, username, email, password, email_confirmed_at, company)
-            VALUES (?, ?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE id = ?,
-            username = VALUES(username),
-            email = VALUES(email),
-            password = VALUES(password),
-            email_confirmed_at = VALUES(email_confirmed_at),
-            company = VALUES(company);
+            UPDATE User
+            SET sername = ?, email_confirmed_at = ?
+            WHERE id = ?
         SQL;
 
         $result = $mysqli->prepareAndExecute(
             $query,
-            'isssssi',
+            'ssi',
             [
-                $user->getId(),
-                $user->getUsername(),
-                $user->getEmail(),
-                $password,
+                $username,
                 $emailConfirmedAt,
-                $user->getCompany(),
-                $user->getId()
+                $user->getId(),
             ]
         );
 
-        if (!$result) return false;
-
-        $user->setEmailConfirmedAt($emailConfirmedAt);
-        error_log("get_Email_At : ".$user->getEmailConfirmedAt());
-
-        return true;
+        return $result;
     }
 
-    private function getRawById(int $id): ?array{
+    public function getById(int $id): ?User
+    {
+        $row = $this->getRowById($id);
+        if($row === null) return null;
+
+        return $this->rowDataToUser($row);
+    }
+
+    public function getByEmail(string $email): ?User
+    {
+        $row = $this->getRowByEmail($email);
+        if($row === null) return null;
+
+        return $this->rowDataToUser($row);
+    }
+
+    public function getHashedPasswordById(int $id): ?string
+    {
+        return $this->getRowById($id)['password']??null;
+    }
+
+    private function getRowById(int $id): ?array
+    {
         $mysqli = DatabaseManager::getMysqliConnection();
 
-        $query = "SELECT * FROM users WHERE id = ?";
+        $query = "SELECT * FROM User WHERE id = ?";
 
         $result = $mysqli->prepareAndFetchAll($query, 'i', [$id])[0] ?? null;
 
@@ -87,10 +106,11 @@ class UserDAOImpl implements UserDAO
         return $result;
     }
 
-    private function getRawByEmail(string $email): ?array{
+    private function getRowByEmail(string $email): ?array
+    {
         $mysqli = DatabaseManager::getMysqliConnection();
 
-        $query = "SELECT * FROM users WHERE email = ?";
+        $query = "SELECT * FROM User WHERE email = ?";
 
         $result = $mysqli->prepareAndFetchAll($query, 's', [$email])[0] ?? null;
 
@@ -98,35 +118,15 @@ class UserDAOImpl implements UserDAO
         return $result;
     }
 
-    private function rawDataToUser(array $rawData): User{
+    private function rowDataToUser(array $rowData): User
+    {
         return new User(
-            username: $rawData['username'],
-            email: $rawData['email'],
-            id: $rawData['id'],
-            company: $rawData['company'] ?? null,
-            emailConfirmedAt: $rawData['email_confirmed_at'] ?? null,
-            timeStamp: new DataTimeStamp($rawData['created_at'], $rawData['updated_at'])
+            username: $rowData['username'],
+            email: $rowData['email'],
+            userType: $rowData['user_type'],
+            id: $rowData['id'],
+            emailConfirmedAt: $rowData['email_confirmed_at'] ?? null,
+            timeStamp: new DataTimeStamp($rowData['created_at'], $rowData['updated_at'])
         );
-    }
-
-    public function getById(int $id): ?User
-    {
-        $userRaw = $this->getRawById($id);
-        if($userRaw === null) return null;
-
-        return $this->rawDataToUser($userRaw);
-    }
-
-    public function getByEmail(string $email): ?User
-    {
-        $userRaw = $this->getRawByEmail($email);
-        if($userRaw === null) return null;
-
-        return $this->rawDataToUser($userRaw);
-    }
-
-    public function getHashedPasswordById(int $id): ?string
-    {
-        return $this->getRawById($id)['password']??null;
     }
 }

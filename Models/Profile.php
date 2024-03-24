@@ -52,6 +52,13 @@ class Profile implements Model {
         $this->location = $location;
     }
 
+    public function getHobby(): ?string {
+        return $this->hobby;
+    }
+
+    public function setHobby(string $hobby): void {
+        $this->hobby = $hobby;
+    }
     public function getSelfIntroduction(): ?string {
         return $this->selfIntroduction;
     }

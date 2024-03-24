@@ -9,7 +9,8 @@ class Room implements Model {
     use GenericModel;
 
     public function __construct(
-        private ?int $id = null,
+        private string $url,
+        private ?int $id = null
     ) {}
 
     public function getId(): ?int {
@@ -18,5 +19,13 @@ class Room implements Model {
 
     public function setId(int $id): void {
         $this->id = $id;
+    }
+
+    public function getUrl(): string {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): void {
+        $this->url = $url;
     }
 }

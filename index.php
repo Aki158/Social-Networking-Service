@@ -19,6 +19,8 @@ $routes = include('Routing/routes.php');
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = ltrim($path, '/');
 
+error_log("path : ".$path);
+
 // ルートにパスが存在するかチェックします
 if (isset($routes[$path])) {
     // ルートの取得

@@ -13,14 +13,11 @@ class CreateNoticeTable implements SchemaMigration
                 id INT PRIMARY KEY AUTO_INCREMENT,
                 user_id INT NOT NULL,
                 visited_id INT NOT NULL,
-                notice_type VARCHAR(255) NOT NULL,
                 reference_id INT NOT NULL,
+                reference_type VARCHAR(255) NOT NULL,
                 confirmed_at DATETIME,
                 FOREIGN KEY (user_id) REFERENCES User(id) ON DELETE CASCADE,
-                FOREIGN KEY (visited_id) REFERENCES User(id) ON DELETE CASCADE,
-                FOREIGN KEY (reference_id) REFERENCES Repost(id) ON DELETE CASCADE,
-                FOREIGN KEY (reference_id) REFERENCES Heart(id) ON DELETE CASCADE,
-                FOREIGN KEY (reference_id) REFERENCES Message(id) ON DELETE CASCADE
+                FOREIGN KEY (visited_id) REFERENCES User(id) ON DELETE CASCADE
             )"
         ];
     }
